@@ -17,6 +17,7 @@ def defaults() -> dict:
         "fallback": "en",  # what text already in `target` is translated into
         "proofreader": "languagetool",  # or "gemini"
         "gemini_model": "gemini-3.5-flash-lite",
+        "shortcuts": False,  # Super+T / Super+G set up once; removing them later is respected
     }
 
 

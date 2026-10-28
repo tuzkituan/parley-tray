@@ -8,9 +8,9 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gio, GLib  # noqa: E402
 
-from . import APP_ID  # noqa: E402
+from . import APP_ID, __version__, settings, shortcuts  # noqa: E402
 
-USAGE = """parley-tray [--translate | --fix | --settings | --background | --quit]
+USAGE = """parley-tray [--translate | --fix | --settings | --background | --quit | --remove-shortcuts | --version]
 
 Stays in the tray. With no option, or a second time, opens the window.
 """
@@ -34,6 +34,10 @@ class App(Adw.Application):
         Adw.Application.do_startup(self)
         self.hold()  # resident: closing the window keeps the tray
         self.spawn_tray()
+        if not settings.load()["shortcuts"]:
+            for line in shortcuts.install():
+                print(f"parley-tray: {line}")
+            settings.save(shortcuts=True)
 
     def do_command_line(self, command_line):
         args = command_line.get_arguments()[1:]
@@ -87,4 +91,12 @@ class App(Adw.Application):
 
 
 def main() -> int:
+    # These don't need the running instance.
+    if sys.argv[1:] == ["--version"]:
+        print(f"parley-tray {__version__}")
+        return 0
+    if sys.argv[1:] == ["--remove-shortcuts"]:
+        shortcuts.remove()
+        settings.save(shortcuts=True)
+        return 0
     return App().run(sys.argv)

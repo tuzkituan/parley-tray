@@ -1,4 +1,7 @@
 #!/bin/sh
-# Runs Parley Tray from its checkout, wherever this script is linked from.
+# Runs Parley Tray from its checkout or install dir, wherever this script is linked from.
 root=$(dirname "$(dirname "$(readlink -f "$0")")")
+# The path shortcuts should run: this link, not its target, so moving the checkout only needs a relink.
+case $0 in /*) PARLEY_TRAY_BIN=$0 ;; *) PARLEY_TRAY_BIN=$(command -v parley-tray || echo "$PWD/$0") ;; esac
+export PARLEY_TRAY_BIN
 PYTHONPATH="$root${PYTHONPATH:+:$PYTHONPATH}" exec python3 -m parley_tray "$@"

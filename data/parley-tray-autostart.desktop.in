@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Parley tray
+Comment=Translate text or fix your English
+Exec=@BIN@ --background
+Icon=@ICON@
+Terminal=false
+X-GNOME-Autostart-enabled=true

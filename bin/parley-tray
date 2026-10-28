@@ -1,0 +1,4 @@
+#!/bin/sh
+# Runs Parley Tray from its checkout, wherever this script is linked from.
+root=$(dirname "$(dirname "$(readlink -f "$0")")")
+PYTHONPATH="$root${PYTHONPATH:+:$PYTHONPATH}" exec python3 -m parley_tray "$@"

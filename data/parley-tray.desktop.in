@@ -1,0 +1,19 @@
+[Desktop Entry]
+Type=Application
+Name=Parley
+Comment=Translate text or fix your English
+Exec=@BIN@
+Icon=@ICON@
+Terminal=false
+Categories=Utility;
+Keywords=translate;grammar;spelling;english;
+StartupNotify=true
+Actions=translate;fix;
+
+[Desktop Action translate]
+Name=Translate
+Exec=@BIN@ --translate
+
+[Desktop Action fix]
+Name=Fix English
+Exec=@BIN@ --fix

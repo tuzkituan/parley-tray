@@ -39,8 +39,8 @@ def main():
         actions.activate_action_full(name, None, _vardict(data))
 
     menu = Gtk.Menu()
-    translate = None
-    for label, name in (("Translate", "translate"), ("Fix English", "fix"), (None, None),
+    first = None
+    for label, name in (("Fix English", "fix"), ("Translate", "translate"), (None, None),
                         ("Settings", "settings"), ("Quit", "quit")):
         if label is None:
             menu.append(Gtk.SeparatorMenuItem())
@@ -48,7 +48,7 @@ def main():
         item = Gtk.MenuItem(label=label)
         item.connect("activate", lambda _i, n=name: run(n))
         menu.append(item)
-        translate = translate or item
+        first = first or item
     menu.show_all()
 
     indicator = AppIndicator.Indicator.new("parley-tray", "parley-tray-symbolic",
@@ -56,7 +56,7 @@ def main():
     indicator.set_icon_theme_path(ICONS)
     indicator.set_title("Parley")
     indicator.set_menu(menu)
-    indicator.set_secondary_activate_target(translate)  # middle click
+    indicator.set_secondary_activate_target(first)  # middle click
     indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE)
 
     Gio.bus_watch_name_on_connection(bus, APP_ID, Gio.BusNameWatcherFlags.NONE, None,

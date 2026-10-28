@@ -12,7 +12,7 @@ from . import APP_ID, __version__, settings, shortcuts  # noqa: E402
 
 USAGE = """parley-tray [--translate | --fix | --settings | --background | --quit | --remove-shortcuts | --version]
 
-Stays in the tray. With no option, or a second time, opens the window.
+Stays in the tray. With no option, opens the window on Fix English.
 """
 
 
@@ -51,7 +51,7 @@ class App(Adw.Application):
         elif flag == "--settings":
             self.show_settings()
         elif flag in ("", "--translate", "--fix"):
-            self.show("fix" if flag == "--fix" else "translate")
+            self.show("translate" if flag == "--translate" else "fix")
         else:
             command_line.printerr_literal(USAGE)
             return 2
@@ -62,15 +62,11 @@ class App(Adw.Application):
 
         if self.window is None:
             self.window = Window(self)
-            self.window.connect("destroy", self._window_gone)
         self.window.open(mode)
 
     def show_settings(self):
-        self.show("translate")
+        self.show("fix")
         self.window.open_settings()
-
-    def _window_gone(self, *_):
-        self.window = None
 
     # The tray icon is a GTK3 helper: AppIndicator can't live in a GTK4 process.
     def spawn_tray(self):
@@ -91,6 +87,8 @@ class App(Adw.Application):
 
 
 def main() -> int:
+    GLib.set_prgname("parley-tray")
+    GLib.set_application_name("Parley")
     # These don't need the running instance.
     if sys.argv[1:] == ["--version"]:
         print(f"parley-tray {__version__}")

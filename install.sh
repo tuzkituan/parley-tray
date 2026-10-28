@@ -22,5 +22,5 @@ icon="$root/data/icons/parley-tray.svg"
 sed -e "s|@BIN@|$bin|" -e "s|@ICON@|$icon|" "$root/data/parley-tray.desktop.in" > "$apps"
 sed -e "s|@BIN@|$bin|" -e "s|@ICON@|$icon|" "$root/data/parley-tray-autostart.desktop.in" > "$autostart"
 echo "Installed $bin"
-"$bin" --background &
+setsid "$bin" --background >/dev/null 2>&1 < /dev/null &
 echo "Parley Tray is running."

@@ -11,15 +11,17 @@ DEBOUNCE_MS = 600
 
 class Window(Adw.ApplicationWindow):
     def __init__(self, app):
-        super().__init__(application=app, title="Parley", default_width=520, default_height=420)
+        # Hidden on close and reused: the app keeps this window for its whole life.
+        super().__init__(application=app, title="Parley", default_width=520, default_height=420,
+                         hide_on_close=True)
         self._seq = 0  # bumped per run, so a slow answer can't overwrite a newer one
         self._debounce = 0
         self._prefill_pending = False
         self._result = ""
 
         self.mode = Adw.ToggleGroup()
-        self.mode.add(Adw.Toggle(name="translate", label="Translate"))
         self.mode.add(Adw.Toggle(name="fix", label="Fix English"))
+        self.mode.add(Adw.Toggle(name="translate", label="Translate"))
         self.mode.connect("notify::active-name", lambda *_: self._mode_changed())
 
         settings_button = Gtk.Button(icon_name="emblem-system-symbolic", tooltip_text="Settings")

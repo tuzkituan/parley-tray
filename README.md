@@ -4,8 +4,8 @@ Translate text or fix your English from the GNOME top bar. The desktop sibling o
 
 | To | Do |
 | --- | --- |
-| Translate the selected text | **Super+T**, or Translate in the tray menu |
 | Fix the English of the selected text | **Super+G**, or Fix English in the tray menu |
+| Translate the selected text | **Super+T**, or Translate in the tray menu |
 | Run again now | **Ctrl+Enter** |
 | Copy the result and close | **Ctrl+Shift+C** |
 | Close | **Esc** |
